@@ -124,7 +124,7 @@ public class Banque implements IBanque {
 		String dernierTypeOperation = typeOperation;
 		int valeurInitiale = leCompte.getSomme();
 
-		leCompte.setSomme(unDepot);
+		leCompte.setSomme(leCompte.getSomme() + unDepot);
 		typeOperation = "Depot";
 
 		pcSupport.firePropertyChange("somme", valeurInitiale, leCompte.getSomme());
