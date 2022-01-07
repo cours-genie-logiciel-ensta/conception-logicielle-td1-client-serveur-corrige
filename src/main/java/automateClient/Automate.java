@@ -86,8 +86,7 @@ public class Automate implements IAutomate {
 		int derniereSommePoche = getSommePoche();
 		int valeurCompte = 0;
 		String valeurRetour = monClientTCP.transmettreChaine("depot " + laSomme);
-		valeurCompte = (new Integer(valeurRetour)).intValue();
-
+		valeurCompte = Integer.parseInt(valeurRetour);
 		retrait(laSomme);
 		// depot(valeurCompte);
 
@@ -109,7 +108,7 @@ public class Automate implements IAutomate {
 		int derniereSommePoche = getSommePoche();
 		int valeurRetrait = 0;
 		String valeurRetour = monClientTCP.transmettreChaine("retrait " + laSomme);
-		valeurRetrait = (new Integer(valeurRetour)).intValue();
+		valeurRetrait = Integer.parseInt(valeurRetour);
 		depot(valeurRetrait);
 		// retrait(valeurRetrait);
 

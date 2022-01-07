@@ -33,6 +33,7 @@ import javax.swing.border.LineBorder;
  * CANNOT BE USED * * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE. ## class
  * ClientGUI
  */
+@SuppressWarnings("serial")
 public class ClientGUI extends JFrame implements PropertyChangeListener {
 
 	/**
@@ -113,7 +114,7 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 	/**
 	 * ## link jTextAreaSommenpoche
 	 */
-	private JTextArea jTextAreaSommenpoche; // ## link jTextAreaSommenpoche
+	// private JTextArea jTextAreaSommenpoche; // ## link jTextAreaSommenpoche
 
 	/**
 	 * ## link jTextFieldSommenpoche
@@ -174,7 +175,7 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 	private JLabel getJLabelSommetraitee() {
 		if (jLabelSommetraitee == null) {
 			jLabelSommetraitee = new JLabel();
-			jLabelSommetraitee.setText("Somme � traiter");
+			jLabelSommetraitee.setText("Somme a traiter");
 			jLabelSommetraitee.setFont(new java.awt.Font("Tahoma", 1, 14));
 			jLabelSommetraitee.setPreferredSize(new java.awt.Dimension(150, 40));
 			jLabelSommetraitee.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -263,15 +264,15 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 						@Override
 						public void actionPerformed(ActionEvent evt) {
 							monCompte.connexionBanque();
-							System.out.println("la somme � traiter " + jEdSaisie.getText());
+							System.out.println("la somme a traiter " + jEdSaisie.getText());
 							setSommenpoche(Integer.parseInt(jTextFieldSommenpoche.getText()));
 							System.out.println("le type d'operation : " + getTypeoperation());
 							if (getTypeoperation() == "retrait") {
-								System.out.println(" somme trait�e en retrait " + jEdSaisie.getText());
+								System.out.println(" somme traitee en retrait " + jEdSaisie.getText());
 								monCompte.demandeRetrait(Integer.parseInt(jEdSaisie.getText()));
 							}
 							if (getTypeoperation() == "depot") {
-								System.out.println(" somme trait�e en depot " + jEdSaisie.getText());
+								System.out.println(" somme traitee en depot " + jEdSaisie.getText());
 								monCompte.demandeDepot(Integer.parseInt(jEdSaisie.getText()));
 
 							}
@@ -348,7 +349,7 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 					jTextArea1 = new JTextArea();
 					// jPanel2.add(getJTextAreaSommenpoche());
 					jPanelNO.add(jTextArea1);
-					jTextArea1.setText("Choix de l'Op�ration");
+					jTextArea1.setText("Choix de l'Operation");
 					jTextArea1.setFont(new java.awt.Font("Tahoma", 1, 14));
 					jTextArea1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					jTextArea1.setWrapStyleWord(true);
@@ -371,7 +372,7 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 				{
 					jRadioButtonDepot = new JRadioButton();
 					jPanelNO.add(jRadioButtonDepot);
-					jRadioButtonDepot.setText("D�p�t");
+					jRadioButtonDepot.setText("Depot");
 					jRadioButtonDepot.setBackground(new java.awt.Color(128, 255, 0));
 					jRadioButtonDepot.setFont(new java.awt.Font("Tahoma", 1, 11));
 					jRadioButtonDepot.setSelected(false);

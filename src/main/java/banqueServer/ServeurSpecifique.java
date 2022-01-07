@@ -43,10 +43,11 @@ class ServeurSpecifique extends Thread {
 	 * * <br>
 	 * <br>
 	 * <br>
+	 * 
 	 * @param&nbsp;uneSocket&nbsp;<br>
 	 * @param&nbsp;unServeur&nbsp; * <!-- end-UML-doc --> * @param uneSocket
-	 * * @param unServeur * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 *                               * @param unServeur * @generated "UML vers Java
+	 *                               (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 * 
 	 * @param uneSocket
 	 * @param unServeur
@@ -80,7 +81,7 @@ class ServeurSpecifique extends Thread {
 				String chaines[] = inputReq.split(" ");
 				System.out.println(" Ordre Recu " + chaines[0]);
 				if (chaines[0].contentEquals("retrait")) {
-					int valeur = (new Integer(chaines[1])).intValue();
+					int valeur = Integer.parseInt(chaines[1]);
 
 					System.out.println(" valeur demandee  " + valeur);
 
@@ -94,7 +95,7 @@ class ServeurSpecifique extends Thread {
 					System.out.println(monServeur);
 				}
 				if (chaines[0].contentEquals("depot")) {
-					int valeur = (new Integer(chaines[1])).intValue();
+					int valeur = Integer.parseInt(chaines[1]);
 
 					System.out.println(" valeur demandee  " + valeur);
 
