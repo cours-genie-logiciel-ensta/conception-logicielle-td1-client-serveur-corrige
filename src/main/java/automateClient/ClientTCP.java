@@ -1,193 +1,130 @@
 
 package automateClient;
 
-import java.io.*;
-//## dependency net 
-import java.net.*;
-//## auto_generated
-import java.net.Socket;
-//## dependency PrintStream 
-import java.io.PrintStream;
-//## dependency BufferedReader 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
- * 
- * * <!-- begin-UML-doc -->
- * * <br><br><br>
- * * <!-- end-UML-doc -->
- * * @author Root
- * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+ * Représente un client TCP : cette classe s'appuie principalement sur un objet
+ * {@link Socket}, et s'initialise par un nom de serveur et un numéro de port
+ */
 public class ClientTCP {
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    private int numeroPort;		//## attribute numeroPort 
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    private String nomServeur;		//## attribute nomServeur 
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    private BufferedReader socIn;		//## link socIn 
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    private PrintStream socOut;		//## link socOut 
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    private Socket socketServeur;		//## link socketServeur 
-    
-    
-    // Constructors
-    
-    /**
-     * 
-     * 
-     * * <br><br><br>@param&nbsp;unNomServeur&nbsp;<br>@param&nbsp;unNumero&nbsp;
-     * * <!-- end-UML-doc -->
-     * * @param unNomServeur
-     * * @param unNumero
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-     * @param unNomServeur
-     * @param unNumero
-    */
-    public  ClientTCP(String unNomServeur, int unNumero) {
-        numeroPort = unNumero;
-        nomServeur = unNomServeur;
-    }
-    
-    /**
-     * 
-     * 
-     * * <br><br><br>@return&nbsp;
-     * * <!-- end-UML-doc -->
-     * * @return
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    public boolean connexionServeur() {
-        try {
-        	socketServeur = new Socket(nomServeur, numeroPort);
-        	socOut = new PrintStream(socketServeur.getOutputStream());
-        	socIn = new BufferedReader(new InputStreamReader(
-        			socketServeur.getInputStream()));
-        
-        } catch (UnknownHostException e) {
-        	System.err.println("Serveur inconnu : " + e);
-        
-        } catch (Exception e) {
-        	System.err.println("Exception:  " + e);
-        
-        }
-        
-        return true;
-    }
-    
-    /**
-     * 
-     * 
-     * * <br><br><br>@return&nbsp;<br>@param&nbsp;uneChaine&nbsp;
-     * * <!-- end-UML-doc -->
-     * * @param uneChaine
-     * * @return
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-     * @param uneChaine
-    */
-    public String connexionTransmettreChaine(String uneChaine) {
-        String msgServeur = null;
-        if (connexionServeur() == true) {
-        	try {
-        
-        		System.out.println("Client " + uneChaine);
-        		socOut.println(uneChaine);
-        		socOut.flush();
-        
-        		msgServeur = socIn.readLine();
-        		System.out.println("Client msgServeur " + msgServeur);
-        		deconnexionServeur();
-        	} catch (Exception e) {
-        		System.err.println("Exception:  " + e);
-        	}
-        }
-        
-        return msgServeur;
-    }
-    
-    /**
-     * 
-     * 
-     * * <br><br>
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    public void deconnexionServeur() {
-        try {
-        	socOut.close();
-        	socIn.close();
-        	socketServeur.close();
-        } catch (Exception e) {
-        	System.err.println("Exception:  " + e);
-        }
-    }
-    
-    /**
-     * 
-     * 
-     * * <br><br><br>@return&nbsp;<br>@param&nbsp;uneChaine&nbsp;
-     * * <!-- end-UML-doc -->
-     * * @param uneChaine
-     * * @return
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-     * @param uneChaine
-    */
-    public String transmettreChaine(String uneChaine) {
-        String msgServeur = null;
-        try {
-        
-        	System.out.println("Client " + uneChaine);
-        
-        	socOut.println(uneChaine);
-        	socOut.flush();
-        
-        	msgServeur = socIn.readLine();
-        
-        	System.out.println("Client msgServeur " + msgServeur);
-        
-        } catch (UnknownHostException e) {
-        	System.err.println("Serveur inconnu : " + e);
-        } catch (Exception e) {
-        	System.err.println("Exception:  " + e);
-        }
-        return msgServeur;
-    }
-    
-}
 
+	private int numeroPort; // ## attribute numeroPort
+	private String nomServeur; // ## attribute nomServeur
+	private BufferedReader socIn; // ## link socIn
+	private PrintStream socOut; // ## link socOut
+	private Socket socketServeur; // ## link socketServeur
+
+	/**
+	 * Création d'un nouveau {@link ClientTCP} avec un nom de serveur et un numéro
+	 * de port
+	 * 
+	 * @param unNomServeur
+	 * @param unNumero
+	 */
+	public ClientTCP(String unNomServeur, int unNumero) {
+		numeroPort = unNumero;
+		nomServeur = unNomServeur;
+	}
+
+	/**
+	 * Exécute la connexion au serveur, et crée la {@link Socket}
+	 * 
+	 * Si une exception se produit, elle est traité en interne, et la méthode
+	 * renvoit false
+	 * 
+	 * @return true si la connexion s'est bien déroulée
+	 */
+	public boolean connexionServeur() {
+		try {
+			socketServeur = new Socket(nomServeur, numeroPort);
+			socOut = new PrintStream(socketServeur.getOutputStream());
+			socIn = new BufferedReader(new InputStreamReader(socketServeur.getInputStream()));
+
+		} catch (UnknownHostException e) {
+			System.err.println("Serveur inconnu : " + e);
+			return false;
+		} catch (Exception e) {
+			System.err.println("Exception:  " + e);
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Commande la déconnexion au serveur
+	 */
+	public void deconnexionServeur() {
+		try {
+			socOut.close();
+			socIn.close();
+			socketServeur.close();
+		} catch (Exception e) {
+			System.err.println("Exception:  " + e);
+		}
+	}
+
+	/**
+	 * Transmet une chaine de caractères sur la Socket, et retourne la réponse sous
+	 * la forme d'une chaine.
+	 * 
+	 * Cette méthode nécessite que la connexion soit effective
+	 * 
+	 * @param uneChaine
+	 * @return
+	 */
+	public String transmettreChaine(String uneChaine) {
+		String msgServeur = null;
+		try {
+
+			System.out.println("Client " + uneChaine);
+
+			socOut.println(uneChaine);
+			socOut.flush();
+
+			msgServeur = socIn.readLine();
+			System.out.println("Client msgServeur " + msgServeur);
+			return msgServeur;
+
+		} catch (UnknownHostException e) {
+			System.err.println("Serveur inconnu : " + e);
+			return null;
+		} catch (Exception e) {
+			System.err.println("Exception:  " + e);
+			return null;
+		}
+	}
+
+	/**
+	 * Echaînement d'une connexion au serveur, de la transmission d'une chaine de
+	 * caractère, et de la déconnexion
+	 * 
+	 * @param uneChaine
+	 * @return
+	 */
+	public String connexionTransmettreChaine(String uneChaine) {
+		String msgServeur = null;
+		if (connexionServeur() == true) {
+			try {
+
+				System.out.println("Client " + uneChaine);
+				socOut.println(uneChaine);
+				socOut.flush();
+
+				msgServeur = socIn.readLine();
+				System.out.println("Client msgServeur " + msgServeur);
+				deconnexionServeur();
+			} catch (Exception e) {
+				System.err.println("Exception:  " + e);
+			}
+		}
+
+		return msgServeur;
+	}
+
+}

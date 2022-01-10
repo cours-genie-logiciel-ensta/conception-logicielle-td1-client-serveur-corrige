@@ -1,44 +1,19 @@
 
 package automateClient;
 
-
-
 /**
+ * API représentant un automate lié à un compte client, permettant de se
+ * connecter à une banque, et de pouvoir effectuer un retrait
  * 
- * * <!-- begin-UML-doc -->
- * * <!-- end-UML-doc -->
- * * @author Root
- * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-*/
+ * @author sylvainguerin
+ *
+ */
 public interface IAutomate {
-    
-    
-    /**
-     * 
-     * 
-     * * <!-- end-UML-doc -->
-     * * @return
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    boolean connexionBanque();
-    
-    /**
-     * 
-     * 
-     * * <!-- end-UML-doc -->
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-    */
-    void deconnexionBanque();
-    
-    /**
-     * 
-     * 
-     * * <!-- end-UML-doc -->
-     * * @param unRetrait
-     * * @generated "UML vers Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-     * @param unRetrait
-    */
-    void retrait(int unRetrait);
-    
-}
 
+	boolean connexionBanque();
+
+	void deconnexionBanque();
+
+	void retrait(int unRetrait);
+
+}

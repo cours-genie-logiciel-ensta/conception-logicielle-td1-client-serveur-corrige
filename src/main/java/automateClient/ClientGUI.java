@@ -23,118 +23,41 @@ import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
 /**
- * * * This code was edited or generated using CloudGarden's Jigloo * *
- * SWT/Swing GUI Builder, which is free for non-commercial * * use. If Jigloo is
- * being used commercially (ie, by a corporation, * * company or business for
- * any purpose whatever) then you * * should purchase a license for each
- * developer using Jigloo. * * Please visit www.cloudgarden.com for details. * *
- * Use of Jigloo implies acceptance of these licensing terms. * * A COMMERCIAL
- * LICENSE HAS NOT BEEN PURCHASED FOR * * THIS MACHINE, SO JIGLOO OR THIS CODE
- * CANNOT BE USED * * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE. ## class
- * ClientGUI
+ * Représente l'interface graphique du client.
+ * 
+ * Contient la classe {@link Automate} qui représente le modèle
+ * 
  */
 @SuppressWarnings("serial")
 public class ClientGUI extends JFrame implements PropertyChangeListener {
 
 	/**
-	 * ## attribute sommenpoche
+	 * L'automate représenté par cette interface graphique
 	 */
-	private int sommenpoche; // ## attribute sommenpoche
+	protected Automate automate;
 
-	/**
-	 * ## attribute sommetraitee
-	 */
+	private int sommenpoche; // ## attribute sommenpoche
 	private int sommetraitee; // ## attribute sommetraitee
 
-	/**
-	 * ## attribute typeoperation
-	 */
+	// Les différents widgets qui composent l'interface graphique
 	private String typeoperation; // ## attribute typeoperation
-
-	/**
-	 * ## link Quitter
-	 */
 	private JButton Quitter; // ## link Quitter
-
-	/**
-	 * ## link buttonGroup1
-	 */
 	private ButtonGroup buttonGroup1; // ## link buttonGroup1
-
-	/**
-	 * ## link jEdSaisie
-	 */
 	private JEditorPane jEdSaisie; // ## link jEdSaisie
-
-	/**
-	 * ## link jLabelSommenpoche
-	 */
 	private JLabel jLabelSommenpoche; // ## link jLabelSommenpoche
-
-	/**
-	 * ## link jLabelSommetraitee
-	 */
 	private JLabel jLabelSommetraitee; // ## link jLabelSommetraitee
-
-	/**
-	 * ## link jPanel2
-	 */
 	private JPanel jPanel2; // ## link jPanel2
-
-	/**
-	 * ## link jPanelNO
-	 */
 	private JPanel jPanelNO; // ## link jPanelNO
-
-	/**
-	 * ## link jPanelcentre
-	 */
 	private JPanel jPanelcentre; // ## link jPanelcentre
-
-	/**
-	 * ## link jPanelsud
-	 */
 	private JPanel jPanelsud; // ## link jPanelsud
-
-	/**
-	 * ## link jRadioButtonDepot
-	 */
 	private JRadioButton jRadioButtonDepot; // ## link jRadioButtonDepot
-
-	/**
-	 * ## link jRadioButtonRetrait
-	 */
 	private JRadioButton jRadioButtonRetrait; // ## link jRadioButtonRetrait
-
-	/**
-	 * ## link jTextArea1
-	 */
 	private JTextArea jTextArea1; // ## link jTextArea1
-
-	/**
-	 * ## link jTextAreaSommenpoche
-	 */
-	// private JTextArea jTextAreaSommenpoche; // ## link jTextAreaSommenpoche
-
-	/**
-	 * ## link jTextFieldSommenpoche
-	 */
 	private JTextField jTextFieldSommenpoche; // ## link jTextFieldSommenpoche
-
-	/**
-	 * ## link monCompte
-	 */
-	protected Automate monCompte; // ## link monCompte
-
-	/**
-	 * ## link valider
-	 */
 	private JButton valider; // ## link valider
 
-	// Constructors
-
 	/**
-	 * ## operation ClientGUI()
+	 * Constructeur par défaut
 	 */
 	public ClientGUI() {
 		super();
@@ -142,8 +65,19 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 		sommetraitee = 0;
 		typeoperation = "retrait";
 
-		initGUI();
+		// On crée le client TCP
+		ClientTCP clienttcp = new ClientTCP("localhost", 6666);
 
+		// Et l'automate (le modèle) de l'interface graphique
+		automate = new Automate(clienttcp, 0);
+		System.out.println("Creation de l'automate: " + automate);
+
+		// On vient ensuite "écouter" l'automate (c'est la classe ClientGUI qui va
+		// recevoir les notifications)
+		automate.getPropertyChangeSupport().addPropertyChangeListener(this);
+
+		// On initialise ensuite l'interface graphique proprement dite
+		initGUI();
 	}
 
 	/**
@@ -218,10 +152,28 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 	}
 
 	/**
+	 * * @param sommenpoche ## operation setSommenpoche(int)
+	 * 
+	 * @param sommenpoche
+	 */
+	public void setSommenpoche(int sommenpoche) {
+		this.sommenpoche = sommenpoche;
+	}
+
+	/**
 	 * ## operation getSommetraitee()
 	 */
 	public int getSommetraitee() {
 		return sommetraitee;
+	}
+
+	/**
+	 * * @param sommetraitee ## operation setSommetraitee(int)
+	 * 
+	 * @param sommetraitee
+	 */
+	public void setSommetraitee(int sommetraitee) {
+		this.sommetraitee = sommetraitee;
 	}
 
 	/**
@@ -232,13 +184,18 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 	}
 
 	/**
+	 * * @param typeoperation ## operation setTypeoperation(String)
+	 * 
+	 * @param typeoperation
+	 */
+	public void setTypeoperation(String typeoperation) {
+		this.typeoperation = typeoperation;
+	}
+
+	/**
 	 * ## operation initGUI()
 	 */
 	private void initGUI() {
-		ClientTCP clienttcp = new ClientTCP("localhost", 6666);
-		monCompte = new Automate(clienttcp, 0);
-		monCompte.getPropertyChangeSupport().addPropertyChangeListener(this);
-		System.out.println(monCompte);
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setForeground(new java.awt.Color(255, 0, 128));
@@ -263,21 +220,21 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 					valider.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent evt) {
-							monCompte.connexionBanque();
+							automate.connexionBanque();
 							System.out.println("la somme a traiter " + jEdSaisie.getText());
 							setSommenpoche(Integer.parseInt(jTextFieldSommenpoche.getText()));
 							System.out.println("le type d'operation : " + getTypeoperation());
 							if (getTypeoperation() == "retrait") {
 								System.out.println(" somme traitee en retrait " + jEdSaisie.getText());
-								monCompte.demandeRetrait(Integer.parseInt(jEdSaisie.getText()));
+								automate.demandeRetrait(Integer.parseInt(jEdSaisie.getText()));
 							}
 							if (getTypeoperation() == "depot") {
 								System.out.println(" somme traitee en depot " + jEdSaisie.getText());
-								monCompte.demandeDepot(Integer.parseInt(jEdSaisie.getText()));
+								automate.demandeDepot(Integer.parseInt(jEdSaisie.getText()));
 
 							}
-							monCompte.deconnexionBanque();
-							System.out.println(monCompte);
+							automate.deconnexionBanque();
+							System.out.println(automate);
 						}
 
 					});
@@ -410,32 +367,8 @@ public class ClientGUI extends JFrame implements PropertyChangeListener {
 	}
 
 	/**
-	 * * @param sommenpoche ## operation setSommenpoche(int)
-	 * 
-	 * @param sommenpoche
+	 * Cette méthode est appelée quand un objet "écouté" notifie une modification
 	 */
-	public void setSommenpoche(int sommenpoche) {
-		this.sommenpoche = sommenpoche;
-	}
-
-	/**
-	 * * @param sommetraitee ## operation setSommetraitee(int)
-	 * 
-	 * @param sommetraitee
-	 */
-	public void setSommetraitee(int sommetraitee) {
-		this.sommetraitee = sommetraitee;
-	}
-
-	/**
-	 * * @param typeoperation ## operation setTypeoperation(String)
-	 * 
-	 * @param typeoperation
-	 */
-	public void setTypeoperation(String typeoperation) {
-		this.typeoperation = typeoperation;
-	}
-
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getSource() instanceof Automate) {
