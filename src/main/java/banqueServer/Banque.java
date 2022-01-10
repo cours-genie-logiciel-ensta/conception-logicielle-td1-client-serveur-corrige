@@ -2,61 +2,41 @@ package banqueServer;
 
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Représente une banque gérant un compte bancaire particulier
+ *
+ */
 public class Banque implements IBanque {
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc -->
-	 */
+	// Le compte bancaire géré
 	private CompteBancaire leCompte;
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc -->
-	 */
-	private String typeOperation; // ## attribute typeOperation
+	private String typeOperation;
+	private int derniereoperation;
+
+	public ServeurTCP serveurBanque;
 
 	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc -->
-	 */
-	private int derniereoperation; // ## attribute derniereoperation
-
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc -->
-	 */
-	public ServeurTCP serveurBanque; // ## link serveurBanque
-
-	/**
-	 * Support for Observable/Observer scheme
+	 * Support du mécanisme Observable/Observer
 	 */
 	private PropertyChangeSupport pcSupport;
 
 	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @param uneSomme * @param x * @param y * @generated
-	 * "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+	 * Création de l'objet Banque: crée le compte bancaire avec la somme initiale
 	 * 
 	 * @param uneSomme
-	 * @param x
-	 * @param y
 	 */
 	public Banque(int uneSomme) {
 
 		pcSupport = new PropertyChangeSupport(this);
 
+		// Creation du compte bancaire
 		leCompte = new CompteBancaire(uneSomme);
 		this.setTypeOperation("Aucune Operation");
 
+		// Initialisation du serveur TCP
 		serveurBanque = new ServeurTCP(6666);
-		serveurBanque.setBanqueCentrale(this);
+		serveurBanque.setBanque(this);
 	}
 
 	public PropertyChangeSupport getPropertyChangeSupport() {
@@ -68,33 +48,13 @@ public class Banque implements IBanque {
 		return derniereoperation;
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @return
-	 */
 	public CompteBancaire getLeCompte() {
 		return leCompte;
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @return * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
 	public String getTypeOperation() {
 		return typeOperation;
 	}
-
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @param operation * @return * @generated "UML vers
-	 * Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 * 
-	 * @param operation
-	 */
 
 	@Override
 	public synchronized int demandeRetrait(int unRetrait) {
@@ -133,32 +93,14 @@ public class Banque implements IBanque {
 		return unDepot;
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc -->
-	 */
 	public void ouvrirBanque() {
 		serveurBanque.go();
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @param typeOperation
-	 * 
-	 * @param typeOperation
-	 */
-	@Override
 	public void setTypeOperation(String typeOperation) {
 		this.typeOperation = typeOperation;
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @return
-	 */
 	@Override
 	public String toString() {
 		return "La Banque possede un compte avec la somme de " + leCompte.getSomme();

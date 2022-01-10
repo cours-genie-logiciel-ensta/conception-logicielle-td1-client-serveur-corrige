@@ -11,54 +11,43 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 /**
- * 
- * * <!-- begin-UML-doc --> * <!-- end-UML-doc --> * @author Root * @generated
- * "UML vers Java
- * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * Une interface graphique triviale (un seul {@link JTextField}) qui affiche un
+ * label représentant la dernière opération
+ *
  */
 @SuppressWarnings("serial")
 public class DerniereOperationGUI extends JFrame implements PropertyChangeListener {
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private JTextField testField; // ## link testField
+	private JTextField derniereOperationTextField;
 
-	/**
-	 * 
-	 * 
-	 * * <!-- end-UML-doc --> * @param b * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 * 
-	 * @param b
-	 */
-	public DerniereOperationGUI(Banque b) {
+	public DerniereOperationGUI(Banque banque) {
 		super();
 
-		b.getPropertyChangeSupport().addPropertyChangeListener(this);
+		// On "écoute" la banque
+		banque.getPropertyChangeSupport().addPropertyChangeListener(this);
 
-		this.setTitle("DERNIERE OPERATION");
-		testField = new javax.swing.JTextField();
-		this.add(testField);
+		this.setTitle("Dernière opération");
+		derniereOperationTextField = new javax.swing.JTextField();
+		this.add(derniereOperationTextField);
 
-		testField.setBackground(new java.awt.Color(255, 128, 0));
-		testField.setPreferredSize(new java.awt.Dimension(250, 108));
-		testField.setFont(new java.awt.Font("Antique Olive", 1, 20));
-		testField.setText(String.valueOf(b.getTypeOperation()));
+		derniereOperationTextField.setBackground(new java.awt.Color(255, 128, 0));
+		derniereOperationTextField.setPreferredSize(new java.awt.Dimension(250, 108));
+		derniereOperationTextField.setFont(new java.awt.Font("Antique Olive", 1, 20));
+		derniereOperationTextField.setText(String.valueOf(banque.getTypeOperation()));
 		this.pack();
 		this.setVisible(true);
 		getContentPane().setBackground(new java.awt.Color(255, 128, 64));
 		getContentPane().setForeground(new java.awt.Color(255, 128, 0));
 	}
 
+	/**
+	 * Cette méthode est appelée quand un objet "écouté" notifie une modification
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getSource() instanceof Banque) {
 			if (evt.getPropertyName().equals("typeOperation")) {
-				testField.setText(((Banque) evt.getSource()).getTypeOperation());
+				derniereOperationTextField.setText(((Banque) evt.getSource()).getTypeOperation());
 			}
 		}
 	}

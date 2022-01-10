@@ -5,6 +5,7 @@ package automateClient;
  * 
  */
 public class MainClient {
+
 	/**
 	 * Méthode principale : lance le programme
 	 * 

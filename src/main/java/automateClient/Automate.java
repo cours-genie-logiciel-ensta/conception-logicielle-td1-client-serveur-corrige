@@ -19,7 +19,7 @@ public class Automate implements IAutomate {
 	public ClientTCP monClientTCP; // ## link monClientTCP
 
 	/**
-	 * Support for Observable/Observer scheme
+	 * Support du mécanisme Observable/Observer
 	 */
 	private PropertyChangeSupport pcSupport;
 

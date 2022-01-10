@@ -1,57 +1,22 @@
 package banqueServer;
 
-//## dependency io 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-//## dependency net 
-//## dependency Socket 
 import java.net.Socket;
 
 /**
+ * Représente la gestion de la connexion d'un client avec le serveur. Cette
+ * gestion repose sur une {@link Socket} et s'effectue dans un {@link Thread}
  * 
- * * <!-- begin-UML-doc --> * <br>
- * * <!-- end-UML-doc --> * @author Root * @generated "UML vers Java
- * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ * 
  */
 class ServeurSpecifique extends Thread {
 
-	/**
-	 * 
-	 * 
-	 * * <br>
-	 * <br>
-	 * * <!-- end-UML-doc --> * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private Socket clientSocket; // ## link clientSocket
+	private Socket clientSocket;
+	private ServeurTCP monServeur;
 
-	/**
-	 * 
-	 * 
-	 * * <br>
-	 * <br>
-	 * * <!-- end-UML-doc --> * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private ServeurTCP monServeur; // ## link monServeur
-
-	/**
-	 * 
-	 * 
-	 * * <br>
-	 * <br>
-	 * <br>
-	 * 
-	 * @param&nbsp;uneSocket&nbsp;<br>
-	 * @param&nbsp;unServeur&nbsp; * <!-- end-UML-doc --> * @param uneSocket
-	 *                               * @param unServeur * @generated "UML vers Java
-	 *                               (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 * 
-	 * @param uneSocket
-	 * @param unServeur
-	 */
 	public ServeurSpecifique(Socket uneSocket, ServeurTCP unServeur) {
 		super("ServeurThread");
 
@@ -59,14 +24,6 @@ class ServeurSpecifique extends Thread {
 		monServeur = unServeur;
 	}
 
-	/**
-	 * 
-	 * 
-	 * * <br>
-	 * <br>
-	 * * <!-- end-UML-doc --> * @generated "UML vers Java
-	 * (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
 	@Override
 	public void run() {
 		String inputReq;
@@ -85,7 +42,7 @@ class ServeurSpecifique extends Thread {
 
 					System.out.println(" valeur demandee  " + valeur);
 
-					int valeurRetrait = monServeur.getBanqueCentrale().demandeRetrait(valeur);
+					int valeurRetrait = monServeur.getBanque().demandeRetrait(valeur);
 
 					String valeurExpediee = "" + valeurRetrait;
 					System.out.println(" Retrait dans serveur " + valeurExpediee);
@@ -99,7 +56,7 @@ class ServeurSpecifique extends Thread {
 
 					System.out.println(" valeur demandee  " + valeur);
 
-					int valeurDepot = monServeur.getBanqueCentrale().demandeDepot(valeur);
+					int valeurDepot = monServeur.getBanque().demandeDepot(valeur);
 
 					String valeurExpediee = "" + valeurDepot;
 					System.out.println(" Depot dans serveur " + valeurExpediee);
